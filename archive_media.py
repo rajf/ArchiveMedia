@@ -3,10 +3,17 @@
 # Name them according to their date of creation.
 # Put them in a directory based on the month.
 
-import sys, os, glob, time, string
+import sys, os, glob, time, string, shutil
 
 config = {
     "mediaSets": [
+        {
+        "parse" : 1,
+        "delSrc" : 1,
+        "srcDir" : "test 2",
+        "destDir": "output/test2",
+        "tags" : "test2"
+        },
         {
         "parse" : 1,
         "delSrc" : 0,
@@ -82,57 +89,9 @@ def init():
             files = parseFolder(srcPath)
             for f in files:
                 parseFile(f, destPath, media["tags"])
+            # Delete import dir and recreate new empty dir
+            if(media["delSrc"]):
+                shutil.rmtree(srcPath)
+                os.mkdir(srcPath)
 
-    # srcPath = os.path.join(os.path.dirname(__file__),srcDir)
-    # destPath = os.path.join(os.path.dirname(__file__),destDir)
-    #
-    # srcfiles = []
-    #
-    # for ROOT,DIR,FILES in os.walk(srcPath):
-    #     for file in FILES:
-    #         if file.endswith(config["extensions"]):
-    #             # print os.path.join(ROOT,file)
-    #             srcfiles.append(os.path.join(ROOT,file))
-    #             print DIR
-    #
-    # for i in srcfiles:
-    #     # print i
-    #     fileName = os.path.splitext(os.path.basename(i))[0]
-    #     ext = os.path.splitext(i)[1]
-    #     t = time.gmtime(os.path.getmtime(i))
-    #     newname = time.strftime("%Y_%m_%d-%H_%M_%S",t) + ext
-    #     monthdir = os.path.join(destPath, newname[:7])
-    #     yearDir = os.path.join(destPath, newname[:4])
-    #
-    #     print fileName
-    #     print newname
-
-        # if not os.path.isdir(monthdir):
-        #     print "Creating new dir", yearDir
-        #     os.mkdir(monthdir)
-        # fullnewname = string.lower(os.path.join(monthdir,newname))
-        #
-        # # if file already exists, we add a suffix
-        # testname = fullnewname
-        # suffnum = 1
-        # while os.path.exists(testname):
-        #         testname = "%s.%02d" % (fullnewname, suffnum)
-        #         suffnum += 1
-        # if testname != fullnewname:
-        #         fullnewname = testname
-        #
-        # print i,"->",fullnewname
-        # if config["move"]:
-        #         os.rename(i, fullnewname)
-        # else:
-        #         s = open(i,"rb")
-        #         d = open(fullnewname, "wb")
-        #         while 1:
-        #             b = s.read()
-        #             if not b: break
-        #             d.write(b)
-        #         d.close()
-        #         s.close()
-
-if __name__ == "__main__":
-    init()
+init()
