@@ -9,28 +9,27 @@ config = {
     "mediaSets": [
         {
         "parse" : 1,
-        "delSrc" : 1,
+        "move" : 1,
         "srcDir" : "test 2",
         "destDir": "output/test2",
         "tags" : "test2"
         },
         {
         "parse" : 1,
-        "delSrc" : 0,
+        "move" : 0,
         "srcDir" : "test",
         "destDir": "output/test",
         "tags" : "test"
         },
         {
         "parse" : 0,
-        "delSrc" : 0,
+        "move" : 0,
         "srcDir" : "import/rob",
         "destDir": "output/rob",
         "tags" : "rajf"
         }
     ],
-    "extensions" : (".png",".jpg",".jpeg",".gif",".mov",".mpg",".mpeg",".wmv",".avi"),
-    "move" : 0
+    "extensions" : (".png",".jpg",".jpeg",".gif",".mov",".mpg",".mpeg",".wmv",".avi")
 }
 
 def parseFolder(srcPath):
@@ -41,7 +40,7 @@ def parseFolder(srcPath):
                 files.append(os.path.join(ROOT,file))
     return files
 
-def parseFile(file, destPath, tags):
+def parseFile(file, destPath, move, tags):
     fileName = os.path.splitext(os.path.basename(file))[0]
     ext = os.path.splitext(file)[1]
     t = time.gmtime(os.path.getmtime(file))
@@ -50,9 +49,9 @@ def parseFile(file, destPath, tags):
     day = time.strftime("%d",t)
     newName = "{0}-{1}-{2}-{3}[{4}]{5}".format(fileName, year, month, day, tags,ext)
     destPath = os.path.join(destPath, year + "/" + month + "/" + newName)
-    writeFile(file, destPath)
+    writeFile(file, destPath, move)
 
-def writeFile(file, destPath):
+def writeFile(file, destPath, move=0):
 
     # check folder exists
     folder=os.path.dirname(destPath)
@@ -69,7 +68,7 @@ def writeFile(file, destPath):
             destPath = testname
 
     print file,"->",destPath
-    if config["move"]:
+    if move:
             os.rename(file, destPath)
     else:
             s = open(file,"rb")
@@ -88,10 +87,10 @@ def init():
         if (media["parse"]):
             files = parseFolder(srcPath)
             for f in files:
-                parseFile(f, destPath, media["tags"])
+                parseFile(f, destPath, media["move"], media["tags"])
             # Delete import dir and recreate new empty dir
-            if(media["delSrc"]):
-                shutil.rmtree(srcPath)
-                os.mkdir(srcPath)
+            # if(media["delSrc"]):
+            #     shutil.rmtree(srcPath)
+            #     os.mkdir(srcPath)
 
 init()
