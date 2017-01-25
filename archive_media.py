@@ -29,7 +29,7 @@ config = {
         "tags" : "rajf"
         }
     ],
-    "extensions" : (".png",".jpg",".jpeg",".gif",".mov",".mpg",".mpeg",".wmv",".avi")
+    "extensions" : (".png",".jpg",".jpeg",".gif",".mov",".mpg",".mpeg",".wmv",".avi",".mp4")
 }
 
 def parseFolder(srcPath):
