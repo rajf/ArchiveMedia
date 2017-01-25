@@ -36,7 +36,7 @@ def parseFolder(srcPath):
     files = []
     for ROOT,DIR,FILES in os.walk(srcPath):
         for file in FILES:
-            if file.endswith(config["extensions"]):
+            if file.lower().endswith(config["extensions"]):
                 files.append(os.path.join(ROOT,file))
     return files
 
@@ -48,7 +48,7 @@ def parseFile(file, destPath, move, tags):
     month = time.strftime("%m",t)
     day = time.strftime("%d",t)
     newName = "{0}--{1}-{2}-{3}[{4}]{5}".format(fileName, year, month, day, tags,ext)
-    destPath = os.path.join(destPath, year + "/" + month + "/" + newName)
+    destPath = os.path.join(destPath, year + "/" + year + "-" + month + "/" + newName)
     writeFile(file, destPath, move)
 
 def writeFile(file, destPath, move=0):
