@@ -47,7 +47,7 @@ def parseFile(file, destPath, move, tags):
     year = time.strftime("%Y",t)
     month = time.strftime("%m",t)
     day = time.strftime("%d",t)
-    newName = "{0}-{1}-{2}-{3}[{4}]{5}".format(fileName, year, month, day, tags,ext)
+    newName = "{0}--{1}-{2}-{3}[{4}]{5}".format(fileName, year, month, day, tags,ext)
     destPath = os.path.join(destPath, year + "/" + month + "/" + newName)
     writeFile(file, destPath, move)
 
