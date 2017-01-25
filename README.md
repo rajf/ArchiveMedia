@@ -8,12 +8,10 @@ I'm using this on a HP Microserver Gen 8 running Xpenology 5.2,
 Usage
 -----
 
-TBD
+Via task scheduler.
 
 
 Credits
 -------
 
 Base Python script inspiration from a src I can't remember. I've kept the original (archive_media_orig.py) here for reference.
-
-Implementation cues taken from https://github.com/carljm/synology-mediamon
